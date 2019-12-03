@@ -1,0 +1,17 @@
+enclave {
+    from "Sealing/Sealing.edl" import *;
+
+    trusted {
+        /* define ECALLs here. ECALLS are calls executed from outside of the enclave, which
+           should be performed inside the enclave */
+        public void secure_word_count([in, size=ndata] const char* data, size_t ndata);
+    };
+
+    untrusted {
+        /* define OCALLs here. OCALLs are executed from within enclave on insecure methods, that is
+           methods located outside the enclave. */
+        void print_message([in, string] const char* str);
+        void reduce_partial_results([in, size=wordbufsize] char* bufword, size_t wordbufsize,
+        						   [in, count=nwords] int* bufcount, size_t nwords);
+    };
+};
